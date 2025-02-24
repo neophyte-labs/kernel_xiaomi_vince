@@ -1,0 +1,11 @@
+# Dark Ages Kernel Default Profile
+# Author: Blacksuan19 @ xda developers
+# inspired by smurf kernel profiles manager
+# Licensed Under GPL 3.0+
+
+# Initialization
+on property:init.svc.qcom-post-boot=stopped
+
+# Set default profile on first boot
+
+exec u:r:magisk:s0 root root -- /sbin/init.da.sh

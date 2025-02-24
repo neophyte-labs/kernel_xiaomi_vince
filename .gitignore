@@ -126,3 +126,5 @@ Android.bp
 
 # Object directory
 out/
+AnyKernel3/
+*.zip
