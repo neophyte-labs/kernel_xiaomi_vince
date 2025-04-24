@@ -4,8 +4,8 @@
 # Copyright (C) 2025 k4ngcaribug
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="Neophyte-Kernel-Vince-KSU-$(TZ=Asia/Kolkata date +"%Y%m%d-%H%M").zip"
-ZIPNAME_KSU="Neophyte-Kernel-Vince-KSU-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
+ZIPNAME="Neophyte-Vince-$(TZ=Asia/Kolkata date +"%Y%m%d-%H%M").zip"
+ZIPNAME_KSU="Neophyte-Vince-KSU-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
 TC_DIR="/workspace/gitpod/clang"
 AK3_DIR="AnyKernel3"
 DEFCONFIG="vendor/vince_defconfig"
