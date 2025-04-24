@@ -14,7 +14,7 @@ export PATH="$TC_DIR/bin:$PATH"
 # Check for essentials
 if ! [ -d "${TC_DIR}" ]; then
 echo "Clang not found! Cloning to ${TC_DIR}..."
-if ! git clone --depth=1 https://gitlab.com/Panchajanya1999/azure-clang -b main ${TC_DIR}; then
+if ! git clone --depth=1 https://gitlab.com/k4ngcaribug/aosp-clang -b 17 ${TC_DIR}; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
@@ -45,7 +45,7 @@ echo -e "\nKSU not Support, let's Skip\n"
 fi
 
 echo -e "\nStarting compilation...\n"
-make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64
+make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64 OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
