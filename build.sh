@@ -5,6 +5,7 @@
 
 SECONDS=0 # builtin bash timer
 ZIPNAME="Neophyte-Kernel-Vince-KSU-$(TZ=Asia/Kolkata date +"%Y%m%d-%H%M").zip"
+ZIPNAME_KSU="Neophyte-Kernel-Vince-KSU-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
 TC_DIR="/workspace/gitpod/clang"
 AK3_DIR="AnyKernel3"
 DEFCONFIG="vendor/vince_defconfig"
@@ -28,8 +29,20 @@ fi
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
 
-# Build KSU-next
+if [[ $1 = "-k" || $1 = "--ksu" ]]; then
+	echo -e "\nCleanup KernelSU first on local build\n"
+	rm -rf KernelSU drivers/kernelsu
+else
+	echo -e "\nSet No KernelSU Install, just skip\n"
+fi
+
+# Set function for KSU variant
+if [[ $1 = "-k" || $1 = "--ksu" ]]; then
+echo -e "\nKSU Support, let's Make it On\n"
 curl -LSs "https://raw.githubusercontent.com/KernelSu-Next/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
+else
+echo -e "\nKSU not Support, let's Skip\n"
+fi
 
 echo -e "\nStarting compilation...\n"
 make -j$(nproc --all) CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64
@@ -41,7 +54,15 @@ cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
 rm -f *zip
 cd AnyKernel3
 git checkout master &> /dev/null
+if [[ $1 = "-k" || $1 = "--ksu" ]]; then
+zip -r9 "../$ZIPNAME_KSU" * -x '*.git*' README.md *placeholder
+else
 zip -r9 "../$ZIPNAME" * -x '*.git*' README.md *placeholder
+fi
 cd ..
-echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
+echo -e "Completed in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
+if [[ $1 = "-k" || $1 = "--ksu" ]]; then
+echo "Zip: $ZIPNAME_KSU"
+else
 echo "Zip: $ZIPNAME"
+fi
