@@ -79,11 +79,6 @@
 		qcom,bam-producer-pipe-index = <7>;
 		qcom,master-id = <84>;
 	};
-	sn_fuse: snfuse@0xa4128 {
-		compatible = "qcom,sn-fuse";
-		reg = <0xa4128 0x4>;
-		reg-names = "sn-base";
-	};
 	qcom,wcnss-wlan@0a000000 {
 		qcom,iris-vddrfa-voltage-level = <1380000 0 1380000>;
 	};
