@@ -12,25 +12,6 @@
  * GNU General Public License for more details.
  */
 
-/* msm8953-mdss */
-&soc {
-	mdss_mdp: qcom,mdss_mdp@1a00000 {
-			qcom,mdss-clk-factor = <110 100>;	/* 1.10 times */
-	};
-};
-
-/* msm8953-mdss-pll */
-&soc {
-	mdss_dsi0_pll: qcom,mdss_dsi_pll@994400 {
-		/delete-property/ qcom,dsi-pll-ssc-en;
-		/delete-property/ qcom,dsi-pll-ssc-mode;
-	};
-	mdss_dsi1_pll: qcom,mdss_dsi_pll@996400 {
-		/delete-property/ qcom,dsi-pll-ssc-en;
-		/delete-property/ qcom,dsi-pll-ssc-mode;
-	};
-};
-
 /* msm8953-mdss-panels */
 #include "panel/dsi-panel-td4310-fhdplus-video_e7.dtsi"
 #include "panel/dsi-panel-td4310-fhdplus-video_e7_g55.dtsi"
@@ -38,15 +19,27 @@
 #include "panel/dsi-panel-nt36672-tianma-fhdplus-video_e7.dtsi"
 #include "panel/dsi-panel-nt36672-csot-fhdplus-video_e7.dtsi"
 
-&soc {
-	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
-		qcom,panel-supply-entry@0 {
-			qcom,supply-post-on-sleep= <2>;
-		};
-		qcom,panel-supply-entry@1 {
-			qcom,supply-post-on-sleep= <2>;
-		};
-	};
+&mdss_mdp {
+	qcom,mdss-pref-prim-intf = "dsi";
+};
+
+&mdss_dsi {
+	hw-config = "single_dsi";
+};
+
+&mdss_dsi0 {
+	lab-supply = <&lab_regulator>;
+	ibb-supply = <&ibb_regulator>;
+	qcom,dsi-pref-prim-pan = <&dsi_td4310_fhdplus_e7_vid>;
+	pinctrl-names = "mdss_default", "mdss_sleep";
+	pinctrl-0 = <&mdss_dsi_active &mdss_te_active>;
+	pinctrl-1 = <&mdss_dsi_suspend &mdss_te_suspend>;
+	qcom,platform-te-gpio = <&tlmm 24 0>;
+	qcom,platform-reset-gpio = <&tlmm 61 0>;
+};
+
+&mdss_dsi1 {
+	status = "disabled";
 };
 
 &dsi_td4310_fhdplus_e7_vid {
@@ -87,5 +80,26 @@
 		25 1f 09 0a 06 03 04 a0
 		25 1f 09 0a 06 03 04 a0
 		25 1e 08 0a 06 03 04 a0];
+};
+
+&dsi_td4310_fhdplus_e7_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_td4310_fhdplus_e7_g55_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+
+&dsi_td4310_ebbg_fhdplus_e7_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_nt36672_tianma_fhdplus_e7_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+};
+
+&dsi_nt36672_csot_fhdplus_e7_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
 };
 
