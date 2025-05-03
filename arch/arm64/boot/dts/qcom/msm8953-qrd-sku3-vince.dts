@@ -44,38 +44,10 @@
 	vbus_dwc3-supply = <&smbcharger_charger_otg>;
 };
 
-&mdss_dsi1 {
-	lab-supply = <&lab_regulator>;
-	ibb-supply = <&ibb_regulator>;
-};
-
 &wled {
 	qcom,fs-curr-ua = <20000>;
 	qcom,led-strings-list = [00 01];
 	qcom,ovp-mv = <29500>;
-};
-
-&dsi_panel_pwr_supply {
-	qcom,panel-supply-entry@2 {
-		reg = <2>;
-		qcom,supply-name = "lab";
-		qcom,supply-min-voltage = <4600000>;
-		qcom,supply-max-voltage = <6000000>;
-		qcom,supply-enable-load = <100000>;
-		qcom,supply-disable-load = <100>;
-		qcom,supply-post-on-sleep = <10>;
-		qcom,supply-post-off-sleep = <2>;
-	};
-
-	qcom,panel-supply-entry@3 {
-		reg = <3>;
-		qcom,supply-name = "ibb";
-		qcom,supply-min-voltage = <4600000>;
-		qcom,supply-max-voltage = <6000000>;
-		qcom,supply-enable-load = <100000>;
-		qcom,supply-disable-load = <100>;
-		/*qcom,supply-post-on-sleep = <10>;*/
-	};
 };
 
 #include "vince/overlay.dtsi"
