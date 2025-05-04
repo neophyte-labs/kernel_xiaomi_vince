@@ -28,12 +28,6 @@
 		};
 	};
 
-	rpm-regulator-ldoa19 {
-		pm8953_l19: regulator-l19 {
-			regulator-max-microvolt = <1380000>;
-		};
-	};
-
 	rpm-regulator-ldoa22 {
 		pm8953_l22: regulator-l22 {
 			regulator-max-microvolt = <2800000>;

@@ -79,9 +79,6 @@
 		qcom,bam-producer-pipe-index = <7>;
 		qcom,master-id = <84>;
 	};
-	qcom,wcnss-wlan@0a000000 {
-		qcom,iris-vddrfa-voltage-level = <1380000 0 1380000>;
-	};
 	/delete-node/ qseecom@85b00000;
 	qcom_seecom: qseecom@84A00000 {
 		compatible = "qcom,qseecom";
